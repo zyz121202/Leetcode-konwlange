@@ -1,0 +1,43 @@
+# C++ 知识点总结：vector.reserve() + 二进制前缀求余技巧  
+**日期：2025-11-25**
+
+---
+
+## 📌 一、代码原题  
+判断一个二进制数组中每个前缀组成的数是否能被 5 整除。
+
+---
+
+## 📌 二、可执行 C++ 代码（含 main，可直接运行）
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<bool> prefixesDivBy5(vector<int>& nums) {
+        vector<bool> res;
+        res.reserve(nums.size());   // 提前分配空间
+
+        int mod = 0;  // 当前前缀对应的 (value % 5)
+
+        for (int bit : nums) {
+            mod = (mod * 2 + bit) % 5;    // 二进制前缀转十进制 mod 5
+            res.push_back(mod == 0);
+        }
+
+        return res;
+    }
+};
+
+int main() {
+    vector<int> nums = {1,0,1,1,0};
+    Solution sol;
+    vector<bool> ans = sol.prefixesDivBy5(nums);
+
+    cout << "结果: ";
+    for (bool x : ans) cout << x << " ";
+    cout << endl;
+    return 0;
+}
